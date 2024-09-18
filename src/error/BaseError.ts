@@ -6,6 +6,3 @@ export abstract class BaseError extends Error{
         super(message)
     }
 }
-
-// as classes filhas vão receber o statusCode e mensage, isso irá passar pela classe baseError
-// e irá retornar a message

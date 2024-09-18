@@ -15,7 +15,16 @@ const recipeController = new RecipeController(
         new TokenManager()
     )
 );
+
 // CreateRecipe
 recipeRouter.post('/new-recipe', upload.single('image'), recipeController.addRecipe);
 // GetAllRecipes
 recipeRouter.get('/all-recipes',recipeController.getAllRecipes)
+// GetRecipeById
+recipeRouter.get('/:id',recipeController.getRecipeById)
+// addFavorites
+recipeRouter.post('/favorites/:id',recipeController.addFavorites)
+// deleteFavorites
+recipeRouter.delete('/delete-favorites/:id',recipeController.deleteFavorites)
+// getFavoriteRecipes
+recipeRouter.get('/favorite-recipes',recipeController.getFavoritesByUserId)
