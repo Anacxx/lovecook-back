@@ -8,8 +8,6 @@ CREATE TABLE users (
     created_at TEXT DEFAULT (DATETIME()) NOT NULL 
 );
 
-select * from users;
-
 CREATE TABLE recipes (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     creator_id TEXT NOT NULL,
@@ -27,9 +25,6 @@ CREATE TABLE recipes (
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
-
-select * from recipes;
-
 
 CREATE TABLE comments (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
@@ -58,6 +53,3 @@ CREATE TABLE favorites (
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
-
-
-drop Table comments;

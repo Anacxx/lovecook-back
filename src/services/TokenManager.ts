@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
-// está atualizado
 dotenv.config()
 
 export enum USER_ROLES {

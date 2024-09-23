@@ -1,10 +1,13 @@
 import { RecipeDatabase } from "../database/RecipeDatabase";
-import { Favorite, FavoriteDB, Recipe, RecipeDB } from "../models/recipes";
+import { Favorite, Recipe, RecipeDB } from "../models/recipes";
 import { TokenManager } from "./../services/TokenManager";
 import { IdGenerator } from './../services/IdGenerator';
 import { UnauthorizedError } from "../error/UnauthorizedError";
 import { AddRecipeInputDTO, AddRecipeOutputDTO } from "../dtos/recipes/AddRecipe.dto";
 import { getRecipeByIdInputDTO, getRecipeByIdOutputDTO } from "../dtos/recipes/getRecipeById.dto";
+import { favoritesByUserIdInputDTO, favoritesByUserIdOutputDTO } from "../dtos/recipes/favoritesByUserId.dto";
+import { addFavoritesInputDTO } from "../dtos/recipes/addFavorites.dto";
+import { deleteFavoritesInputDTO } from "../dtos/recipes/deleteFavorites.dto";
 
 export class RecipeBusiness {
     constructor(
@@ -41,42 +44,45 @@ export class RecipeBusiness {
         await this.recipeDatabase.createRecipe(recipeDB);
     }
 
-    public async getAllRecipes(): Promise <any> {
-        const allRecipesDB = await this.recipeDatabase.getAllRecipes()
-        const output = allRecipesDB.map(dbModel => Recipe.fromDBModel(dbModel));
+    public async getAllRecipes(): Promise<RecipeDB[]> {
+        const allRecipesDB = await this.recipeDatabase.getAllRecipes();
+        return allRecipesDB;
+    }
+
+    public async getRecipeById(input: getRecipeByIdInputDTO): Promise<getRecipeByIdOutputDTO> {
+        const { id } = input;
+        const output = await this.recipeDatabase.getRecipeById(id);
         return output;
     }
-    public async getRecipeById(input: getRecipeByIdInputDTO): Promise <getRecipeByIdOutputDTO>{
-        const { id} = input
-        const output = await this.recipeDatabase.getRecipeById(id) 
-        return output
-    }
-    public async getFavoritesByUserId(token: string): Promise <RecipeDB[]>{
+
+    public async favoritesByUserId(input: favoritesByUserIdInputDTO): Promise<favoritesByUserIdOutputDTO> {
+        const { token } = input;
         if (!token) {
-            throw new UnauthorizedError("Token não fornecido!");
+            throw new UnauthorizedError('Token não fornecido!');
         }
         const payload = this.tokenManager.getPayload(token);
         if (!payload) {
             throw new UnauthorizedError("Não autorizado!");
         }
-        const favoriteRecipes = await this.recipeDatabase.getFavoriteRecipes(payload.id)
-        return favoriteRecipes
-    } 
-    public async addFavorites(input: any): Promise <any>{
-        const { token, recipeId } = input
+        const favoriteRecipes = await this.recipeDatabase.favoritesByUserId(payload.id);
+        return favoriteRecipes;
+    }
+
+    public async addFavorites(input: addFavoritesInputDTO): Promise<void> {
+        const { token, recipeId } = input;
         const payload = this.tokenManager.getPayload(token);
         if (!payload) {
-            throw new UnauthorizedError("Não é adicionar aos favoritos sem cadastro!");
+            throw new UnauthorizedError("Não é possível adicionar aos favoritos sem cadastro!");
         }
         const newFavorite = new Favorite(
             payload.id,
-            recipeId,
-        )
-        const favoriteDB = newFavorite.toDBModel()
-        await this.recipeDatabase.addFavorites(favoriteDB) 
-        
+            recipeId
+        );
+        const favoriteDB = newFavorite.toDBModel();
+        await this.recipeDatabase.addFavorites(favoriteDB);
     }
-    public async deleteFavorites(input: any): Promise <any>{
+
+    public async deleteFavorites(input: deleteFavoritesInputDTO): Promise<void> {
         const { token, recipeId } = input;
         const payload = this.tokenManager.getPayload(token);
         if (!payload) {
@@ -86,10 +92,8 @@ export class RecipeBusiness {
             payload.id,
             recipeId
         );
-    
+
         const favoriteDB = favoriteToDelete.toDBModel();
         await this.recipeDatabase.deleteFavorites(favoriteDB);
-        
     }
-  
 }

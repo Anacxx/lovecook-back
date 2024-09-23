@@ -6,11 +6,11 @@ export class CommentDatabase extends BaseDatabase {
 
     public async addComment(input: CommentDB): Promise<void> {
         await BaseDatabase.connection('comments')
-        .insert(input)
+            .insert(input);
     }
+
     public async getCommentsByRecipeId(recipeId: string): Promise<CommentDB[]> {
         return BaseDatabase.connection('comments')
             .where({ recipe_id: recipeId });
     }
-
 }

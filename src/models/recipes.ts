@@ -15,7 +15,7 @@ export interface RecipeDB {
     creator: string;
     image: string | undefined;
     category: RecipeCategory;
-    ingredients: string; // Armazenado como JSON string no banco
+    ingredients: string;
     method: string;
     additional_instructions: string | undefined;
     total_rating: number;
@@ -48,7 +48,7 @@ export class Recipe {
             creator: this.creator,
             image: this.image,
             category: this.category,
-            ingredients: JSON.stringify(this.ingredients), // Converte o array em string JSON
+            ingredients: JSON.stringify(this.ingredients), 
             method: this.method,
             additional_instructions: this.additional_instructions,
             total_rating: this.total_rating,

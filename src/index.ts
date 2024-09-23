@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.listen(Number(process.env.PORT) || 3000, () => {
+app.listen(Number(process.env.PORT) || 3003, () => {
     console.log(`Servidor rodando na porta ${Number(process.env.PORT) || 3003}`);
 });
 
@@ -21,3 +21,5 @@ app.listen(Number(process.env.PORT) || 3000, () => {
 app.use("/users", userRouter);
 app.use("/recipes", recipeRouter);
 app.use("/comments", commentRouter);
+
+// final
