@@ -1,7 +1,7 @@
 import express from 'express';
 import { RecipeController } from '../controller/RecipeController';
 import { RecipeBusiness } from '../business/RecipeBusiness';
-import upload from '../middleware/multer';
+import upload from '../upload'; // Certifique-se de que o caminho está correto
 import { RecipeDatabase } from '../database/RecipeDatabase';
 import { IdGenerator } from '../services/IdGenerator';
 import { TokenManager } from '../services/TokenManager';
