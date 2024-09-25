@@ -34,32 +34,37 @@ Antes de começar, verifique se você possui os seguintes pré-requisitos instal
     ```bash
     npm run start
 
-Uso da API
-🧑‍💻 **Endpoints de Usuário**
----
-/signup - Criação de um novo usuário.
----
-/login - Autenticação de um usuário.
----
-🍴 **Endpoints de Receita**
----
-/addRecipe - Adicionar uma nova receita (autenticado).
-/getAllRecipes - Obter todas as receitas.
-/getRecipeById/{id} - Obter receita por ID.
-/favoritesByUserId - Obter receitas favoritas de um usuário.
-/addFavorites - Adicionar receita aos favoritos (autenticado).
-/deleteFavorites - Remover receita dos favoritos (autenticado).
-💬 **Endpoints de Comentário**
-/addComment - Adicionar um comentário a uma receita (autenticado).
-/getCommentsByRecipeId/{id} - Obter comentários de uma receita por ID.
+## 📋 **Endpoints da API**
 
-💻 **Tecnologias Utilizadas**
+### 🧑‍💻 **Endpoints de Usuário**
+- **`/signup`** - Criação de um novo usuário.
+- **`/login`** - Autenticação de um usuário.
+
+---
+
+### 🍴 **Endpoints de Receita**
+- **`/addRecipe`** - Adicionar uma nova receita (requer autenticação).
+- **`/getAllRecipes`** - Obter todas as receitas.
+- **`/getRecipeById/{id}`** - Obter receita por ID.
+- **`/favoritesByUserId`** - Obter receitas favoritas de um usuário.
+- **`/addFavorites`** - Adicionar receita aos favoritos (requer autenticação).
+- **`/deleteFavorites`** - Remover receita dos favoritos (requer autenticação).
+
+---
+
+### 💬 **Endpoints de Comentário**
+- **`/addComment`** - Adicionar um comentário a uma receita (requer autenticação).
+- **`/getCommentsByRecipeId/{id}`** - Obter comentários de uma receita por ID.
+
+---
+
+## 💻 **Tecnologias Utilizadas**
 As principais tecnologias e ferramentas utilizadas no desenvolvimento deste projeto são:
 
-Node.js: Plataforma de desenvolvimento.
-TypeScript: Linguagem de programação utilizada.
-Express: Framework para construção da API.
-SQL e Knex: Gerenciamento e construção de queries SQL.
-Hashing: Utilizado para proteger senhas de usuários.
-JWT (JSON Web Token): Autenticação e autorização via tokens.
-POO (Programação Orientada a Objetos): Estruturação do projeto utilizando paradigmas de POO.
+- **Node.js**: Plataforma de desenvolvimento.
+- **TypeScript**: Linguagem de programação utilizada.
+- **Express**: Framework para construção da API.
+- **SQL** e **Knex**: Gerenciamento e construção de queries SQL.
+- **Hashing**: Utilizado para proteger senhas de usuários.
+- **JWT (JSON Web Token)**: Autenticação e autorização via tokens.
+- **POO (Programação Orientada a Objetos)**: Estruturação do projeto utilizando paradigmas de POO.
