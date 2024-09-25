@@ -36,9 +36,13 @@ Antes de começar, verifique se você possui os seguintes pré-requisitos instal
 
 Uso da API
 🧑‍💻 **Endpoints de Usuário**
+---
 /signup - Criação de um novo usuário.
+---
 /login - Autenticação de um usuário.
+---
 🍴 **Endpoints de Receita**
+---
 /addRecipe - Adicionar uma nova receita (autenticado).
 /getAllRecipes - Obter todas as receitas.
 /getRecipeById/{id} - Obter receita por ID.
