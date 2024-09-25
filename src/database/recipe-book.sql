@@ -7,7 +7,6 @@ CREATE TABLE users (
     role TEXT NOT NULL,
     created_at TEXT DEFAULT (DATETIME()) NOT NULL 
 );
-
 CREATE TABLE recipes (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     creator_id TEXT NOT NULL,
