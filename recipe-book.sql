@@ -24,7 +24,7 @@ CREATE TABLE recipes (
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
-
+drop table recipes;
 CREATE TABLE comments (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     author TEXT NOT NULL,
