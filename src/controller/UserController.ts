@@ -12,14 +12,15 @@ export class UserController {
 
     private handleError(error: any, res: Response) {
         if (error instanceof ZodError) {
-            return res.status(400).send({ issues: error.issues });
+            return res.status(400).send({ message: "Falha", issues: error.issues });
         } else if (error instanceof BaseError) {
             return res.status(error.statusCode).send({ message: error.message });
         } else {
             console.error("Unexpected error:", error);
-            return res.status(500).send({ message: "Internal server error" });
+            return res.status(500).send({ message: "Erro Interno do Servidor" });
         }
     }
+    
 
     public signup = async (req: Request, res: Response) => {
         try {

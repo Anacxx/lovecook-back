@@ -17,7 +17,7 @@ export class CommentController {
             return res.status(error.statusCode).send({ message: error.message });
         } else {
             console.error("Unexpected error:", error);
-            return res.status(500).send({ message: "Internal server error" });
+            return res.status(500).send({ message: "Erro interno do servidor" });
         }
     }
 
