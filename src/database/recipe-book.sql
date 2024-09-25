@@ -41,8 +41,7 @@ CREATE TABLE comments (
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
-SELECT * FROM comments;
-drop table users;
+
 CREATE TABLE favorites (
     user_id TEXT NOT NULL,
     recipe_id TEXT NOT NULL,

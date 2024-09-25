@@ -65,6 +65,13 @@ As principais tecnologias e ferramentas utilizadas no desenvolvimento deste proj
 - **TypeScript**: Linguagem de programação utilizada.
 - **Express**: Framework para construção da API.
 - **SQL** e **Knex**: Gerenciamento e construção de queries SQL.
+- **Knex**: Query builder SQL.
+- **UUID (Universal Unique Identifier) generation**: Geração de identificadores únicos.
 - **Hashing**: Utilizado para proteger senhas de usuários.
 - **JWT (JSON Web Token)**: Autenticação e autorização via tokens.
 - **POO (Programação Orientada a Objetos)**: Estruturação do projeto utilizando paradigmas de POO.
+- **Routing**: Roteamento de solicitações.
+- **Postman**: Ferramenta para testar e documentar APIs.
+
+## 📋 **Documentação Completa**
+Acesse a documentação completa da API no [Postman](https://documenter.getpostman.com/view/38577887/2sAXqwYzcF).
