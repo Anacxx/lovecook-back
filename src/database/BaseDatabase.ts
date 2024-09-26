@@ -1,7 +1,8 @@
-import { knex } from 'knex'
-import dotenv from 'dotenv'
+// src/database/BaseDatabase.ts
+import { knex } from 'knex';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 export abstract class BaseDatabase {
     protected static connection = knex({
@@ -14,8 +15,8 @@ export abstract class BaseDatabase {
             min: 0,
             max: 1,
             afterCreate: (conn: any, cb: any) => {
-                conn.run("PRAGMA foreign_keys = ON", cb)
+                conn.run("PRAGMA foreign_keys = ON", cb);
             }
         }
-    })
+    });
 }

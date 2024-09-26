@@ -9,6 +9,6 @@
       "noImplicitAny": true,      
       "esModuleInterop": true,
       "noEmitOnError": true,
-      "strict": true
+      "strict": true,
   }
 }

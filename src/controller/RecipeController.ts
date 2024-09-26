@@ -24,23 +24,24 @@ export class RecipeController {
         }
     }
 
+
     public addRecipe = async (req: Request, res: Response) => {
         try {
-            const image = req.file?.filename; // Obtém o nome do arquivo enviado
-            const ingredients = JSON.parse(req.body.ingredients); // Parseia os ingredientes
-    
+            const imageFile = req.file;
+            const ingredients = JSON.parse(req.body.ingredients);
+
             const input = AddRecipeSchema.parse({
                 title: req.body.title,
-                image: `/uploads/${image}`, // Corrigido para incluir a URL correta da imagem
+                image: imageFile?.filename, // Store the file name
                 category: req.body.category,
                 ingredients,
                 method: req.body.method,
                 additional_instructions: req.body.additional_instructions,
                 token: req.headers.authorization
             });
-    
-            await this.recipeBusiness.addRecipe(input);
-            res.status(201).send({ message: "Receita criada com sucesso!" });
+
+            const imageUrl = await this.recipeBusiness.addRecipe(input);
+            res.status(201).send({ message: "Receita criada com sucesso!", imageUrl });
         } catch (error) {
             this.handleError(error, res);
         }

@@ -15,4 +15,11 @@ export class UserDatabase extends BaseDatabase {
             .where({ email });
         return result as UserDB | null;
     };
+    public async getUserById(userId: string): Promise<UserDB | null> {
+        const [result] = await BaseDatabase.connection('users')
+            .select("*")
+            .where({ id: userId });
+        return result as UserDB | null;
+    }
+    
 }
