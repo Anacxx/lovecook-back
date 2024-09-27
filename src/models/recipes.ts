@@ -32,7 +32,7 @@ export class Recipe {
         private creator: string,
         private image: string | undefined,
         private category: RecipeCategory,
-        private ingredients: string[], // Armazenado como array de strings
+        private ingredients: string[], 
         private method: string,
         private additional_instructions: string | undefined,
         private total_rating: number,
@@ -65,7 +65,7 @@ export class Recipe {
             dbModel.creator,
             dbModel.image,
             dbModel.category,
-            JSON.parse(dbModel.ingredients), // Converte a string JSON de volta para array
+            JSON.parse(dbModel.ingredients), 
             dbModel.method,
             dbModel.additional_instructions,
             dbModel.total_rating,

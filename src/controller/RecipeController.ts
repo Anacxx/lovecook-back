@@ -19,35 +19,31 @@ export class RecipeController {
         } else if (error instanceof BaseError) {
             return res.status(error.statusCode).send({ message: error.message });
         } else {
-            console.error("Unexpected error:", error);
+            console.error("Erro inesperado:", error);
             return res.status(500).send({ message: "Erro interno do servidor" });
         }
     }
-
-
     public addRecipe = async (req: Request, res: Response) => {
         try {
-            const imageFile = req.file;
-            const ingredients = JSON.parse(req.body.ingredients);
-
-            const input = AddRecipeSchema.parse({
-                title: req.body.title,
-                image: imageFile?.filename, // Store the file name
-                category: req.body.category,
-                ingredients,
-                method: req.body.method,
-                additional_instructions: req.body.additional_instructions,
-                token: req.headers.authorization
-            });
-
-            const imageUrl = await this.recipeBusiness.addRecipe(input);
-            res.status(201).send({ message: "Receita criada com sucesso!", imageUrl });
+          const ingredients = JSON.parse(req.body.ingredients);
+      
+          const input = AddRecipeSchema.parse({
+            title: req.body.title,
+            image: req.file, 
+            category: req.body.category,
+            ingredients,
+            method: req.body.method,
+            additional_instructions: req.body.additional_instructions,
+            token: req.headers.authorization,
+          });
+      
+          await this.recipeBusiness.addRecipe(input); 
+          res.status(201).send({ message: "Receita criada com sucesso!" });
         } catch (error) {
-            this.handleError(error, res);
+          this.handleError(error, res);
         }
-    }
-    
-
+      };
+      
     public getAllRecipes = async (req: Request, res: Response) => {
         try {
             const recipes = await this.recipeBusiness.getAllRecipes();

@@ -4,17 +4,15 @@ import { RecipeBusiness } from '../business/RecipeBusiness';
 import { RecipeDatabase } from '../database/RecipeDatabase';
 import { IdGenerator } from '../services/IdGenerator';
 import { TokenManager } from '../services/TokenManager';
-import uploadConfig from '../config/upload';
 import multer from 'multer';
+import uploadConfig from '../config/upload';
 import { BadRequestError } from '../error/BadRequestError';
 import { UserDatabase } from '../database/UserDatabase';
+import UploadImagesService from '../services/UploadImagesService';
 
 export const recipeRouter = express.Router();
-const upload = multer({
-  storage: uploadConfig.storage,
-});
+const upload = multer(uploadConfig);
 
-// Criação do controlador de receita
 const recipeController = new RecipeController(
   new RecipeBusiness(
     new RecipeDatabase(),
@@ -24,16 +22,17 @@ const recipeController = new RecipeController(
   )
 );
 
-// Criar Receita
 recipeRouter.post('/new-recipe', upload.single('image'), async (req, res) => {
   try {
-    // Verifique se o arquivo da imagem foi enviado
     if (!req.file) {
-      throw new BadRequestError("A imagem é obrigatória."); // Use a classe BadRequestError
+      throw new BadRequestError("A imagem é obrigatória.");
     }
 
-    req.body.image = req.file.filename; // Adicione o nome da imagem ao corpo da requisição
-    await recipeController.addRecipe(req, res); // Chame o controlador para adicionar a receita
+    const uploadService = new UploadImagesService();
+    const imageUrl = await uploadService.execute(req.file); 
+
+    req.body.image = imageUrl; 
+    await recipeController.addRecipe(req, res);
   } catch (error) {
     if (error instanceof BadRequestError) {
       res.status(error.statusCode).send({ message: error.message });
@@ -42,10 +41,13 @@ recipeRouter.post('/new-recipe', upload.single('image'), async (req, res) => {
     }
   }
 });
-
-// Outras rotas...
+// getAllRecipes
 recipeRouter.get('/all-recipes', recipeController.getAllRecipes);
+// favoritesByUserId
 recipeRouter.get('/favorites', recipeController.favoritesByUserId);
+// getRecipeById
 recipeRouter.get('/:id', recipeController.getRecipeById);
+// addFavorites
 recipeRouter.post('/favorites/:id', recipeController.addFavorites);
+// deleteFavorites
 recipeRouter.delete('/delete-favorites/:id', recipeController.deleteFavorites);

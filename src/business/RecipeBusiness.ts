@@ -19,44 +19,53 @@ export class RecipeBusiness {
     ) {}
     public async addRecipe(input: AddRecipeInputDTO): Promise<void> {
         const id = this.idGenerator.generate();
-        const { title, image, ingredients, method, additional_instructions, category, token } = input;
-    
+        const {
+          title,
+          image, 
+          ingredients,
+          method,
+          additional_instructions,
+          category,
+          token,
+        } = input;
+        
         const payload = this.tokenManager.getPayload(token);
         if (!payload) {
-            throw new UnauthorizedError("Não é possível criar receita sem cadastro!");
+          throw new UnauthorizedError("Não é possível criar receita sem cadastro!");
         }
+      
         const userExists = await this.userDatabase.getUserById(payload.id);
         if (!userExists) {
-            throw new UnauthorizedError("Usuário não encontrado. Não é possível criar receita!");
+          throw new UnauthorizedError("Usuário não encontrado. Não é possível criar receita!");
         }
-    
-        if (!image) {
-            throw new Error("A imagem é obrigatória.");
+      
+        let imageUrl: string;
+        if (!image || !image.buffer || !image.originalname) {
+          throw new Error("A imagem é obrigatória.");
+        } else {
+          const s3Storage = new S3Storage();
+          imageUrl = await s3Storage.saveFile(image.originalname, image.buffer);
         }
-    
-        const s3Storage = new S3Storage();
-        const imageUrl = await s3Storage.saveFile(image); // Obter a URL da imagem no S3
-    
+       
         const newRecipe = new Recipe(
-            id,
-            payload.id,
-            title,
-            payload.name,
-            imageUrl, // Armazenar a URL da imagem no banco de dados
-            category,
-            ingredients,
-            method,
-            additional_instructions,
-            0,
-            0,
-            new Date().toISOString()
+          id,
+          payload.id, 
+          title,
+          payload.name, 
+          imageUrl, 
+          category,
+          ingredients,
+          method,
+          additional_instructions,
+          0, 
+          0, 
+          new Date().toISOString() 
         );
-    
+      
         const recipeDB = newRecipe.toDBModel();
-        await this.recipeDatabase.createRecipe(recipeDB);
-    }
-    
-    
+        await this.recipeDatabase.createRecipe(recipeDB); 
+      }
+      
     public async getAllRecipes(): Promise<RecipeDB[]> {
         const allRecipesDB = await this.recipeDatabase.getAllRecipes();
         return allRecipesDB;

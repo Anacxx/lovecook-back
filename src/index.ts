@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Rotas
+
 app.use("/users", userRouter);
 app.use("/recipes", recipeRouter);
 app.use("/comments", commentRouter);
